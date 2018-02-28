@@ -13,31 +13,28 @@ import jsonthemer.util.AssetsUtils
  * Copyright © 2018. All rights reserved.
  */
 
-class JsonThemer {
+object JsonThemer {
+    inline fun <reified T: ThemeModel> setup(activity: AppCompatActivity, assetsFileName: String) : T {
+        val themeModel: T = AssetsUtils.loadStyleAssets(activity, assetsFileName)
+        activity.setTheme(themeModel.getModelTheme())
 
-    companion object {
-        inline fun <reified T: ThemeModel> setup(activity: AppCompatActivity, assetsFileName: String) : T {
-            var themeModel: T = AssetsUtils.loadStyleAssets(activity, assetsFileName)
-            activity.setTheme(themeModel.getModelTheme())
+        setStatusBarAndNavigationBarColor(activity, themeModel)
 
-            setStatusBarAndNavigationBarColor(activity, themeModel)
-
-            if (themeModel is BaseThemeModel) {
-                setLayoutInflater(activity, DefaultThemeLayoutInflaterFactory(activity, themeModel as BaseThemeModel))
-            }
-
-            return themeModel
+        if (themeModel is BaseThemeModel) {
+            setLayoutInflater(activity, DefaultThemeLayoutInflaterFactory(activity, themeModel as BaseThemeModel))
         }
 
-        fun setStatusBarAndNavigationBarColor(activity: AppCompatActivity, theme: ThemeModel) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                activity.window.statusBarColor = theme.getStatusBarColor()
-                activity.window.navigationBarColor = theme.getNavigationBarColor()
-            }
-        }
+        return themeModel
+    }
 
-        fun setLayoutInflater(activity: AppCompatActivity, layoutInflaterFactory: LayoutInflater.Factory2) {
-            activity.getLayoutInflater().setFactory2(layoutInflaterFactory);
+    fun setStatusBarAndNavigationBarColor(activity: AppCompatActivity, theme: ThemeModel) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.window.statusBarColor = theme.getStatusBarColor()
+            activity.window.navigationBarColor = theme.getNavigationBarColor()
         }
+    }
+
+    fun setLayoutInflater(activity: AppCompatActivity, layoutInflaterFactory: LayoutInflater.Factory2) {
+        activity.getLayoutInflater().setFactory2(layoutInflaterFactory);
     }
 }
