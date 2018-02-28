@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 
 /**
  * Created by Manne Öhlund on 2018-02-23.
- * Copyright © 2018 Frost. All rights reserved.
+ * Copyright © 2018. All rights reserved.
  */
 
 class AssetsUtils {

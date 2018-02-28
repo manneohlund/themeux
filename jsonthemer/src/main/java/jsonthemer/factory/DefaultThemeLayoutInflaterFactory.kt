@@ -14,24 +14,18 @@ import android.support.v4.view.ViewCompat
 import android.support.v4.widget.CompoundButtonCompat
 import android.support.v4.widget.ContentLoadingProgressBar
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.AppCompatCheckBox
-import android.support.v7.widget.AppCompatEditText
-import android.support.v7.widget.AppCompatRadioButton
-import android.support.v7.widget.AppCompatRatingBar
-import android.support.v7.widget.AppCompatSeekBar
-import android.support.v7.widget.Toolbar
+import android.support.v7.widget.*
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-
 import jsonthemer.model.BaseThemeModel
 
 /**
  * Created by Manne Öhlund on 2018-02-26.
- * Copyright © 2018 Frost. All rights reserved.
+ * Copyright © 2018. All rights reserved.
  */
 
 class DefaultThemeLayoutInflaterFactory(
