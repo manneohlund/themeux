@@ -3,8 +3,8 @@
   "toolbarThemeOverlay": 0,
   "popupThemeOverlay": 1,
   "statusBarColor": "#00796B",
-  "toolbarColor": "#009688",
+  "toolbarColor": "#C8009688",
   "accentColor": "#CDDC39",
-  "navigationBarColor": "#00796B",
+  "navigationBarColor": "#C800796B",
   "backgroundColor": "#FF000000"
 }

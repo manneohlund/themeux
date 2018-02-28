@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.sample.jsonthemer.databinding.ActivityMainBinding
 import jsonthemer.JsonThemer
 import jsonthemer.model.BaseThemeModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,5 +60,19 @@ class MainActivity : AppCompatActivity() {
     private fun changeTheme(style: String) {
         currentTheme = style
         recreate()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            window.decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    //or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                    //or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                    //or View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                    or View.SYSTEM_UI_FLAG_IMMERSIVE);
+        }
     }
 }
