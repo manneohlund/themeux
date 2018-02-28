@@ -4,7 +4,7 @@
     <data>
 
         <variable
-            name="styleModel"
+            name="themeModel"
             type="jsonthemer.model.BaseThemeModel" />
     </data>
 
@@ -19,7 +19,7 @@
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
-            android:background="@{styleModel.toolbarColor}"
+            android:background="@{themeModel.toolbarColor}"
             android:fitsSystemWindows="true">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:contentScrim="@{styleModel.statusBarColorDrawable}"
+                app:contentScrim="@{themeModel.statusBarColorDrawable}"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <android.support.v7.widget.Toolbar

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val theme: BaseThemeModel = JsonThemer.setup(this, currentTheme)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.styleModel = theme
+        binding.themeModel = theme
 
         // Set ActionBar from bindings
         setSupportActionBar(binding.toolbar)
