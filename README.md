@@ -37,14 +37,14 @@ Define themes in `.json` files and add it to `assets` folder
 
 ### Android Data Binding
 Let the DataBinding in Android do the stitching.
-Set the data model variable in your layout and bind model attributes in xml code ex: `android:background="@{styleModel.toolbarColor}"`.
+Set the data model variable in your layout and bind model attributes in xml code ex: `android:background="@{themeModel.toolbarColor}"`.
 
 ```xml
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
-            name="styleModel"
+            name="themeModel"
             type="jsonthemer.model.BaseThemeModel" />
     </data>
     
@@ -53,12 +53,12 @@ Set the data model variable in your layout and bind model attributes in xml code
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@{styleModel.toolbarColor}" />
+        android:background="@{themeModel.toolbarColor}" />
 </layout>
 ```
 
 ### Setup Json Theme in Activity
-If you use or extend `BaseThemeModel` `JsonThemer` will set a `DefaultThemeLayoutInflaterFactory` that will handle the style setting on all android.support components for `accentColor`.
+If you use or extend `BaseThemeModel` `JsonThemer` will set a `DefaultThemeLayoutInflaterFactory` that will handle the theme/style setting on all android.support components for `accentColor`.
 
 ```kotlin
 
@@ -71,7 +71,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     
     // Setup data binding and set the theme
     var binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-    binding.styleModel = theme
+    binding.themeModel = theme
 }
 ```
 
