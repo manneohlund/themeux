@@ -1,0 +1,10 @@
+{
+  "theme": 0,
+  "toolbarThemeOverlay": 1,
+  "popupThemeOverlay": 0,
+  "statusBarColor": "#303F9F",
+  "toolbarColor": "#3F51B5",
+  "accentColor": "#448AFF",
+  "navigationBarColor": "#303F9F",
+  "backgroundColor": "#FFFFFFFF"
+}

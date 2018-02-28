@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sample.jsonthemer.MainActivity">
+    <item
+        android:id="@+id/action_red"
+        android:orderInCategory="100"
+        android:title="Red"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_lime"
+        android:orderInCategory="100"
+        android:title="Lime"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_green"
+        android:orderInCategory="100"
+        android:title="Green"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_blue"
+        android:orderInCategory="100"
+        android:title="Blue"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_white"
+        android:orderInCategory="100"
+        android:title="White"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        android:visible="false"
+        app:showAsAction="never" />
+</menu>

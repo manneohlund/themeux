@@ -1,0 +1,52 @@
+{
+  "red": {
+    "theme": 0,
+    "toolbarThemeOverlay": 1,
+    "popupThemeOverlay": 0,
+    "statusBarColor": "#D32F2F",
+    "toolbarColor": "#F44336",
+    "accentColor": "#FF9800",
+    "navigationBarColor": "#D32F2F",
+    "backgroundColor": "#FFFFFFFF"
+  },
+  "lime": {
+    "theme": 1,
+    "toolbarThemeOverlay": 0,
+    "popupThemeOverlay": 1,
+    "statusBarColor": "#00796B",
+    "toolbarColor": "#009688",
+    "accentColor": "#CDDC39",
+    "navigationBarColor": "#00796B",
+    "backgroundColor": "#FF000000"
+  },
+  "green": {
+    "theme": 1,
+    "toolbarThemeOverlay": 0,
+    "popupThemeOverlay": 1,
+    "statusBarColor": "#388E3C",
+    "toolbarColor": "#4CAF50",
+    "accentColor": "#8BC34A",
+    "navigationBarColor": "#388E3C",
+    "backgroundColor": "#FF000000"
+  },
+  "blue": {
+    "theme": 0,
+    "toolbarThemeOverlay": 1,
+    "popupThemeOverlay": 0,
+    "statusBarColor": "#303F9F",
+    "toolbarColor": "#3F51B5",
+    "accentColor": "#448AFF",
+    "navigationBarColor": "#303F9F",
+    "backgroundColor": "#FFFFFFFF"
+  },
+  "white": {
+    "theme": 0,
+    "toolbarThemeOverlay": 0,
+    "popupThemeOverlay": 1,
+    "statusBarColor": "#50FFFFFF",
+    "toolbarColor": "#50FFFFFF",
+    "accentColor": "#FF000000",
+    "navigationBarColor": "#50000000",
+    "backgroundColor": "#FFeaeaea"
+  }
+}
