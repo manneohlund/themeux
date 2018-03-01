@@ -21,7 +21,10 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import jsonthemer.model.BaseThemeModel
+import jsonthemer.annotation.AccentColor
+import jsonthemer.annotation.Theme
+import jsonthemer.annotation.ToolbarThemeOverlay
+import jsonthemer.util.ReflectionUtil
 
 /**
  * Created by Manne Öhlund on 2018-02-26.
@@ -30,7 +33,19 @@ import jsonthemer.model.BaseThemeModel
 
 class DefaultThemeLayoutInflaterFactory(
         private val appCompatActivity: AppCompatActivity,
-        private val themeModel: BaseThemeModel) : LayoutInflater.Factory2 {
+        private val themeModel: Any) : LayoutInflater.Factory2 {
+
+    val theme: Int
+    val toolbarThemeOverlay: Int
+    var accentColor: Int
+
+    init {
+        theme = ReflectionUtil.getValue(themeModel, Theme::class) as Int
+        toolbarThemeOverlay = ReflectionUtil.getValue(themeModel, ToolbarThemeOverlay::class) as Int
+        accentColor = ReflectionUtil.getValue(themeModel, AccentColor::class).let {
+            if (it is String) Color.parseColor(it) else it as Int
+        }
+    }
 
     override fun onCreateView(parent: View?, name: String, context: Context, attrs: AttributeSet): View? {
         return inflateView(parent, name, context, attrs)
@@ -44,17 +59,18 @@ class DefaultThemeLayoutInflaterFactory(
     private fun inflateView(parent: View?, viewName: String, context: Context, attributeSet: AttributeSet): View? {
         var result: View?
         var wrapper = context
+
         if (viewName.startsWith("android.support")) {
-            wrapper = ContextThemeWrapper(context, themeModel.getToolbarThemeOverlay())
+            wrapper = ContextThemeWrapper(context, toolbarThemeOverlay)
 
             if (TextUtils.equals(viewName, Toolbar::class.java.name)) {
                 val toolbar = Toolbar(wrapper, attributeSet)
-                toolbar.popupTheme = themeModel.getPopupThemeOverlay()
+                toolbar.popupTheme = toolbarThemeOverlay
                 return toolbar
             } else if (TextUtils.equals(viewName, AppBarLayout::class.java.name)) {
                 return AppBarLayout(wrapper, attributeSet)
             } else if (viewName.startsWith("android.support.v7.widget.AppCompat")) {
-                wrapper = ContextThemeWrapper(context, themeModel.getModelTheme())
+                wrapper = ContextThemeWrapper(context, theme)
                 if (TextUtils.equals(viewName, AppCompatRadioButton::class.java.name)) {
                     val radioButton = AppCompatRadioButton(wrapper, attributeSet)
                     CompoundButtonCompat.setButtonTintList(radioButton, tint)
@@ -65,37 +81,37 @@ class DefaultThemeLayoutInflaterFactory(
                     return checkBox
                 } else if (TextUtils.equals(viewName, AppCompatEditText::class.java.name)) {
                     val editText = AppCompatEditText(wrapper, attributeSet)
-                    ViewCompat.setBackgroundTintList(editText, ColorStateList.valueOf(themeModel.getAccentColor()))
-                    colorHandles(editText, themeModel.getAccentColor())
+                    ViewCompat.setBackgroundTintList(editText, ColorStateList.valueOf(accentColor))
+                    colorHandles(editText, accentColor)
                     return editText
                 } else if (TextUtils.equals(viewName, AppCompatSeekBar::class.java.name)) {
                     val seekBar = AppCompatSeekBar(wrapper, attributeSet)
-                    seekBar.progressDrawable.setColorFilter(themeModel.getAccentColor(), PorterDuff.Mode.SRC_ATOP)
+                    seekBar.progressDrawable.setColorFilter(accentColor, PorterDuff.Mode.SRC_ATOP)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        seekBar.thumb.setColorFilter(themeModel.getAccentColor(), PorterDuff.Mode.SRC_ATOP)
+                        seekBar.thumb.setColorFilter(accentColor, PorterDuff.Mode.SRC_ATOP)
                     }
                     return seekBar
                 } else if (TextUtils.equals(viewName, AppCompatRatingBar::class.java.name)) {
                     val ratingBar = AppCompatRatingBar(wrapper, attributeSet)
                     val stars = ratingBar.progressDrawable as LayerDrawable
                     stars.getDrawable(0).setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP)
-                    stars.getDrawable(1).setColorFilter(themeModel.getAccentColor(), PorterDuff.Mode.SRC_ATOP)
-                    stars.getDrawable(2).setColorFilter(themeModel.getAccentColor(), PorterDuff.Mode.SRC_ATOP)
+                    stars.getDrawable(1).setColorFilter(accentColor, PorterDuff.Mode.SRC_ATOP)
+                    stars.getDrawable(2).setColorFilter(accentColor, PorterDuff.Mode.SRC_ATOP)
                     //ratingBar.getProgressDrawable().setColorFilter(stylesModel.getAccentColor(), PorterDuff.Mode.SRC_OVER);
                     return ratingBar
                 }
             } else if (viewName.startsWith("android.support.v4.widget")) {
-                wrapper = ContextThemeWrapper(context, themeModel.getModelTheme())
+                wrapper = ContextThemeWrapper(context, theme)
                 if (TextUtils.equals(viewName, ContentLoadingProgressBar::class.java.name)) {
                     val progressBar = ContentLoadingProgressBar(wrapper, attributeSet)
-                    progressBar.indeterminateDrawable.setColorFilter(themeModel.getAccentColor(), PorterDuff.Mode.SRC_ATOP)
+                    progressBar.indeterminateDrawable.setColorFilter(accentColor, PorterDuff.Mode.SRC_ATOP)
                     return progressBar
                 }
             } else if (viewName.startsWith("android.support.design.widget")) {
-                wrapper = ContextThemeWrapper(context, themeModel.getModelTheme())
+                wrapper = ContextThemeWrapper(context, theme)
                 if (TextUtils.equals(viewName, FloatingActionButton::class.java.name)) {
                     val fab = FloatingActionButton(wrapper, attributeSet)
-                    fab.setBackgroundTintList(ColorStateList.valueOf(themeModel.getAccentColor()));
+                    fab.setBackgroundTintList(ColorStateList.valueOf(accentColor));
                     return fab
                 }
             }
@@ -113,19 +129,17 @@ class DefaultThemeLayoutInflaterFactory(
     }
 
     // Helper
-
     val tint: ColorStateList
         get() = ColorStateList(
                 arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked)),
-                intArrayOf(Color.DKGRAY, themeModel.getAccentColor())
+                intArrayOf(Color.DKGRAY, accentColor)
         )
 
     val editTextTint: ColorStateList
         get() = ColorStateList(
                 arrayOf(intArrayOf(-android.R.attr.state_focused), intArrayOf(android.R.attr.state_focused)),
-                intArrayOf(Color.DKGRAY, themeModel.getAccentColor())
+                intArrayOf(Color.DKGRAY, accentColor)
         )
-
     companion object {
 
         fun colorHandles(view: TextView, color: Int) {
