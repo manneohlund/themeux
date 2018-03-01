@@ -1,5 +1,5 @@
 
-# jsonthemer
+# Themeux
 Define theme in json file and dynamically load in to a ThemeModel and bind it to your views with DataBinding
 
 # Gradle
@@ -18,7 +18,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    compile 'com.github.manneohlund:jsonthemer:2.0.0'
+    compile 'com.github.manneohlund:themeux:3.0.0'
 }
 ```
 
@@ -47,12 +47,12 @@ class ThemeModel {
 
 ### Setup Theme in Activity
 
-`JsonThemer` will set a `DefaultThemeLayoutInflaterFactory` that will handle the theme/style setting on all android.support components for `accentColor`.
+`Themeux` will set a `DefaultThemeLayoutInflaterFactory` that will handle the theme/style setting on all android.support components for `accentColor`.
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
     // Must be setup before onCreate to enable the json theme
-    val theme = JsonThemer.setup(this, ThemeModel::class)
+    val theme = Themeux.setup(this, ThemeModel::class)
     
     // Call super after the JsonThemer setup
     super.onCreate(savedInstanceState)
@@ -88,7 +88,7 @@ Set the data model variable in your layout and bind model attributes in xml code
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
     // Must be setup before onCreate to enable the json theme
-    val theme = JsonThemer.setup(this, ThemeModel::class)
+    val theme = Themeux.setup(this, ThemeModel::class)
     
     // Call super after the JsonThemer setup
     super.onCreate(savedInstanceState)
@@ -97,7 +97,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     var binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     binding.themeModel = theme
     
-	// Set ActionBar from bindings  
+    // Set ActionBar from bindings  
     setSupportActionBar(binding.toolbar) 
 }
 ```
@@ -171,7 +171,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 	// Load json theme and override target model
     val theme: ThemeModel = let {  
 	    try {
-		    JsonThemer.setup(this, "blue_theme.json")  
+		    Themeux.setup(this, "blue_theme.json")  
         } catch (e: Exception) {  
             Log.e(MainActivity::class.simpleName, "Error: AssetFileNotFound, " \+ e.message)  
   
