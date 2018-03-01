@@ -39,4 +39,5 @@ dependencies {
     // Kotlin
     kapt "com.android.databinding:compiler:$android_plugin_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
