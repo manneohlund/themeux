@@ -1,5 +1,7 @@
 
 # Themeux
+![Thermux](https://raw.githubusercontent.com/manneohlund/themeux/master/sample/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png)
+
 Define theme in json file and dynamically load in to a ThemeModel and bind it to your views with DataBinding
 
 # Gradle
