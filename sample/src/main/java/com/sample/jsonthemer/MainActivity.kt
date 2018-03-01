@@ -3,13 +3,13 @@ package com.sample.jsonthemer
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.sample.jsonthemer.databinding.ActivityMainBinding
 import jsonthemer.JsonThemer
 import jsonthemer.model.BaseThemeModel
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,10 +23,19 @@ class MainActivity : AppCompatActivity() {
         var currentTheme: String = LIME_THEME
     }
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val theme: BaseThemeModel = JsonThemer.setup(this, currentTheme)
+        val theme: BaseThemeModel = let {
+            try {
+                JsonThemer.setup(this, currentTheme)
+            } catch (e: Exception) {
+                Log.e(MainActivity::class.simpleName, "Error: AssetFileNotFound, " + e.message)
+
+                // Fallback on base model
+                BaseThemeModel()
+            }
+        }
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.themeModel = theme
