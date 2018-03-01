@@ -9,7 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import com.sample.jsonthemer.databinding.ActivityMainBinding
 import jsonthemer.JsonThemer
-import jsonthemer.model.BaseThemeModel
+import jsonthemer.model.ThemeModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,14 +26,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val theme: BaseThemeModel = let {
+        val theme: ThemeModel = let {
             try {
                 JsonThemer.setup(this, currentTheme)
             } catch (e: Exception) {
                 Log.e(MainActivity::class.simpleName, "Error: AssetFileNotFound, " + e.message)
 
                 // Fallback on base model
-                BaseThemeModel()
+                ThemeModel()
             }
         }
         super.onCreate(savedInstanceState)
