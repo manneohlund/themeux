@@ -1,6 +1,7 @@
 package jsonthemer.factory
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -32,12 +33,12 @@ import jsonthemer.util.ReflectionUtil
  */
 
 class DefaultThemeLayoutInflaterFactory(
-        private val appCompatActivity: AppCompatActivity,
+        private val activity: Activity,
         private val themeModel: Any) : LayoutInflater.Factory2 {
 
     val theme: Int
     val toolbarThemeOverlay: Int
-    var accentColor: Int
+    val accentColor: Int
 
     init {
         theme = ReflectionUtil.getValue(themeModel, Theme::class) as Int
@@ -118,11 +119,11 @@ class DefaultThemeLayoutInflaterFactory(
         }
 
         // Try to let the Activity handle it (inflating fragments from XML)
-        result = appCompatActivity.onCreateView(viewName, wrapper, attributeSet)
+        result = activity.onCreateView(viewName, wrapper, attributeSet)
 
-        if (result == null) {
+        if (result == null && activity is AppCompatActivity) {
             // Get themed views from app compat
-            result = appCompatActivity.delegate.createView(parent, viewName, wrapper, attributeSet)
+            result = activity.delegate.createView(parent, viewName, wrapper, attributeSet)
         }
 
         return result
