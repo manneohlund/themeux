@@ -1,15 +1,15 @@
-package jsonthemer
+package themeux
 
 import android.app.Activity
 import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
-import jsonthemer.annotation.NavigationBar
-import jsonthemer.annotation.StatusBar
-import jsonthemer.annotation.Theme
-import jsonthemer.factory.DefaultThemeLayoutInflaterFactory
-import jsonthemer.util.AssetsUtils
-import jsonthemer.util.ReflectionUtil
+import themeux.annotation.NavigationBar
+import themeux.annotation.StatusBar
+import themeux.annotation.Theme
+import themeux.factory.DefaultThemeLayoutInflaterFactory
+import themeux.util.AssetsUtils
+import themeux.util.ReflectionUtil
 import java.io.File
 import java.io.IOException
 import kotlin.reflect.KClass
@@ -20,7 +20,7 @@ import kotlin.reflect.full.createInstance
  * Copyright © 2018. All rights reserved.
  */
 
-object JsonThemer {
+object Themeux {
 
     /**
      * Setup ThemeModel from assets file

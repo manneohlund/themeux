@@ -1,4 +1,4 @@
-package jsonthemer.annotation
+package themeux.annotation
 
 /**
  * Created by Manne Öhlund on 2018-02-27.

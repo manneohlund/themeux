@@ -1,8 +1,8 @@
-package jsonthemer.model
+package themeux.model
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import jsonthemer.annotation.*
+import themeux.annotation.*
 
 /**
  * Created by Manne Öhlund on 2018-02-23.

@@ -8,8 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.sample.themeux.databinding.ActivityMainBinding
-import jsonthemer.JsonThemer
-import jsonthemer.model.ThemeModel
+import themeux.Themeux
+import themeux.model.ThemeModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val theme: ThemeModel = let {
             try {
-                JsonThemer.setup(this, currentTheme)
+                Themeux.setup(this, currentTheme)
             } catch (e: Exception) {
                 Log.e(MainActivity::class.simpleName, "Error: AssetFileNotFound, " + e.message)
 

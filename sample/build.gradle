@@ -29,7 +29,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
-    implementation project(path: ':jsonthemer')
+    implementation project(path: ':themeux')
 
     implementation 'com.android.support:appcompat-v7:26.0.1'
     implementation 'com.android.support:design:26.0.1'

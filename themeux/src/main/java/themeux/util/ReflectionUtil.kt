@@ -1,4 +1,4 @@
-package jsonthemer.util
+package themeux.util
 
 import android.util.Log
 import kotlin.reflect.*

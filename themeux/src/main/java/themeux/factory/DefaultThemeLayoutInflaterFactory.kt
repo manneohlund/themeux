@@ -1,4 +1,4 @@
-package jsonthemer.factory
+package themeux.factory
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -22,10 +22,10 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import jsonthemer.annotation.AccentColor
-import jsonthemer.annotation.Theme
-import jsonthemer.annotation.ToolbarThemeOverlay
-import jsonthemer.util.ReflectionUtil
+import themeux.annotation.AccentColor
+import themeux.annotation.Theme
+import themeux.annotation.ToolbarThemeOverlay
+import themeux.util.ReflectionUtil
 
 /**
  * Created by Manne Öhlund on 2018-02-26.

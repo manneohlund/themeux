@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/JsonThemer.iml" filepath="$PROJECT_DIR$/JsonThemer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jsonthemer/jsonthemer.iml" filepath="$PROJECT_DIR$/jsonthemer/jsonthemer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Themeux.iml" filepath="$PROJECT_DIR$/Themeux.iml" />
+      <module fileurl="file://$PROJECT_DIR$/themeux/jsonthemer.iml" filepath="$PROJECT_DIR$/themeux/jsonthemer.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/themeux/themeux.iml" filepath="$PROJECT_DIR$/themeux/themeux.iml" />
     </modules>
   </component>
 </project>

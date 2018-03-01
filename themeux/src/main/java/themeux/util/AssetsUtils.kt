@@ -1,4 +1,4 @@
-package jsonthemer.util
+package themeux.util
 
 import android.content.Context
 import com.google.gson.Gson
