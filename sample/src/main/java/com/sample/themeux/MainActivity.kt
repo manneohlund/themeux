@@ -1,4 +1,4 @@
-package com.sample.jsonthemer
+package com.sample.themeux
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.sample.jsonthemer.databinding.ActivityMainBinding
+import com.sample.themeux.databinding.ActivityMainBinding
 import jsonthemer.JsonThemer
 import jsonthemer.model.ThemeModel
 
