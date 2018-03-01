@@ -3,8 +3,7 @@ package jsonthemer.util
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.IOException
-import java.io.InputStreamReader
+import java.io.*
 
 
 /**
@@ -15,15 +14,18 @@ import java.io.InputStreamReader
 class AssetsUtils {
     companion object {
         @Throws(IOException::class)
-        inline fun <reified T : Any> loadStyleAssets(context: Context, fileName: String): T {
-            val assetManager = context.assets
-            val ims = assetManager.open(fileName)
+        inline fun <reified T : Any> loadStyleFromAssets(context: Context, fileName: String): T {
+            return loadStyle(context.assets.open(fileName))
+        }
 
-            val gson = Gson()
-            val reader = InputStreamReader(ims)
+        @Throws(IOException::class)
+        inline fun <reified T : Any> loadStyleFromFile(file: File): T {
+            return loadStyle(FileInputStream(file))
+        }
 
-            val type = object : TypeToken<T>() {}.type
-            return gson.fromJson(reader, type)
+        @Throws(IOException::class)
+        inline fun <reified T : Any> loadStyle(inputStream: InputStream): T {
+            return Gson().fromJson(InputStreamReader(inputStream), object : TypeToken<T>() {}.type)
         }
     }
 }
