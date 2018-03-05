@@ -56,7 +56,7 @@ class ThemeModel {
     @ToolbarThemeOverlay
     fun getToolbarThemeOverlay(): Int {
         return when (toolbarThemeOverlay) {
-            DARK -> return android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark
+            DARK -> return android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark_ActionBar
             else -> android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Light
         }
     }
@@ -64,7 +64,7 @@ class ThemeModel {
     @ToolbarPopupThemeOverlay
     fun getToolbarPopupThemeOverlay(): Int {
         return when (popupThemeOverlay) {
-            DARK -> return android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark
+            DARK -> return android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat
             else -> android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Light
         }
     }
