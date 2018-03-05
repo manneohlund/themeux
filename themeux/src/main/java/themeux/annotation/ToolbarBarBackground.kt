@@ -5,4 +5,4 @@ package themeux.annotation
  * Copyright © 2018. All rights reserved.
  */
 
-annotation class ToolbarBar
+annotation class ToolbarBarBackground

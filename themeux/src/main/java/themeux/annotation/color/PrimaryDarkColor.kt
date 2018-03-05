@@ -1,4 +1,4 @@
-package themeux.annotation
+package themeux.annotation.color
 
 /**
  * Created by Manne Öhlund on 2018-02-27.
