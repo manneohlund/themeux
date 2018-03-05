@@ -20,7 +20,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    compile 'com.github.manneohlund:themeux:3.1.0'
+    compile 'com.github.manneohlund:themeux:3.1.1'
 }
 ```
 
@@ -39,7 +39,7 @@ class ThemeModel {
     val theme = android.support.v7.appcompat.R.style.Theme_AppCompat_NoActionBar
 
     @ToolbarThemeOverlay
-    val toolbarThemeOverlay = android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark
+    val toolbarThemeOverlay = android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark_ActionBar
 
     @ToolbarPopupThemeOverlay
     val popupThemeOverlay = android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark
