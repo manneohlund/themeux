@@ -30,6 +30,7 @@ class BasicThemeModel {
     @PrimaryColor
     private val primaryColor = Color.parseColor("#4CAF50")
 
+    @NavigationBarColor
     @PrimaryDarkColor
     private val primaryDarkColor = Color.parseColor("#C8388E3C")
 

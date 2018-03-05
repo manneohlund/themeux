@@ -120,7 +120,7 @@ object Themeux {
         // Navigation bar color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getThemeModelColor(themeModel, NavigationBarColor::class, true)?.let { navigationBarColor ->
-                activity.window.statusBarColor = navigationBarColor
+                activity.window.navigationBarColor = navigationBarColor
             }
         }
     }
