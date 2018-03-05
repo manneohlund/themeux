@@ -25,6 +25,7 @@ import android.view.View
 import android.widget.TextView
 import themeux.annotation.color.AccentColor
 import themeux.annotation.theme.Theme
+import themeux.annotation.theme.ToolbarPopupThemeOverlay
 import themeux.annotation.theme.ToolbarThemeOverlay
 import themeux.util.ReflectionUtil
 
@@ -39,6 +40,7 @@ class DefaultThemeLayoutInflaterFactory(
 
     val theme: Int
     val toolbarThemeOverlay: Int
+    val toolbarPopupThemeOverlay: Int
     val accentColor: Int?
 
     var themeWrapper: ContextThemeWrapper? = null
@@ -47,6 +49,7 @@ class DefaultThemeLayoutInflaterFactory(
     init {
         theme = ReflectionUtil.getValue(themeModel, Theme::class) as Int
         toolbarThemeOverlay = ReflectionUtil.getValue(themeModel, ToolbarThemeOverlay::class) as Int
+        toolbarPopupThemeOverlay = ReflectionUtil.getValue(themeModel, ToolbarPopupThemeOverlay::class) as Int
         accentColor = ReflectionUtil.getValue(themeModel, AccentColor::class).let {
             if (it is String) Color.parseColor(it) else it as Int
         }
@@ -64,12 +67,12 @@ class DefaultThemeLayoutInflaterFactory(
     private fun inflateView(parent: View?, viewName: String, context: Context, attributeSet: AttributeSet): View? {
         var result: View?
         if (themeWrapper == null) themeWrapper = ContextThemeWrapper(context, theme)
-        if (toolbarThemeOverlayWrapper == null) toolbarThemeOverlayWrapper = ContextThemeWrapper(context, theme)
+        if (toolbarThemeOverlayWrapper == null) toolbarThemeOverlayWrapper = ContextThemeWrapper(context, toolbarThemeOverlay)
 
         if (viewName.startsWith("android.support")) {
             if (TextUtils.equals(viewName, Toolbar::class.java.name)) {
                 val toolbar = Toolbar(toolbarThemeOverlayWrapper, attributeSet)
-                toolbar.popupTheme = toolbarThemeOverlay
+                toolbar.popupTheme = toolbarPopupThemeOverlay
                 return toolbar
             } else if (TextUtils.equals(viewName, AppBarLayout::class.java.name)) {
                 return AppBarLayout(toolbarThemeOverlayWrapper, attributeSet)
