@@ -3,10 +3,14 @@ package themeux
 import android.app.Activity
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
-import themeux.annotation.NavigationBar
-import themeux.annotation.StatusBar
-import themeux.annotation.Theme
+import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+import themeux.annotation.color.NavigationBarColor
+import themeux.annotation.color.StatusBarColor
+import themeux.annotation.flag.WindowFlags
+import themeux.annotation.theme.Theme
 import themeux.factory.DefaultThemeLayoutInflaterFactory
 import themeux.util.AssetsUtils
 import themeux.util.ReflectionUtil
@@ -14,6 +18,8 @@ import java.io.File
 import java.io.IOException
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.findAnnotation
+
 
 /**
  * Created by Manne Öhlund on 2018-02-27.
@@ -27,9 +33,9 @@ object Themeux {
      * @exception NoSuchFileException
      */
     @Throws(IOException::class)
-    inline fun <reified T: Any> setup(activity: Activity, assetsFileName: String) : T {
+    inline fun <reified T: Any> setup(activity: Activity, assetsFileName: String, setDefaultThemeLayoutInflaterFactory: Boolean = true) : T {
         val themeModel: T = AssetsUtils.loadStyleFromAssets(activity, assetsFileName)
-        return setup(activity, themeModel)
+        return setup(activity, themeModel, setDefaultThemeLayoutInflaterFactory)
     }
 
     /**
@@ -38,30 +44,42 @@ object Themeux {
      * @exception NoSuchFileException
      */
     @Throws(IOException::class)
-    inline fun <reified T: Any> setup(activity: Activity, file: File) : T {
+    inline fun <reified T: Any> setup(activity: Activity, file: File, setDefaultThemeLayoutInflaterFactory: Boolean = true) : T {
         val themeModel: T = AssetsUtils.loadStyleFromFile(file)
-        return setup(activity, themeModel)
+        return setup(activity, themeModel, setDefaultThemeLayoutInflaterFactory)
     }
 
     /**
      * Setup ThemeModel from Java class
      */
-    fun <T: Any> setup(activity: Activity, themeModel: Class<T>) : T {
-        return setup(activity, themeModel.newInstance())
+    fun <T: Any> setup(activity: Activity, themeModel: Class<T>, setDefaultThemeLayoutInflaterFactory: Boolean = true) : T {
+        return setup(activity, themeModel.newInstance(), setDefaultThemeLayoutInflaterFactory)
     }
 
     /**
      * Setup ThemeModel from Kotlin class
      */
-    fun <T: Any> setup(activity: Activity, themeModel: KClass<T>) : T {
-        return setup(activity, themeModel.createInstance())
+    fun <T: Any> setup(activity: Activity, themeModel: KClass<T>, setDefaultThemeLayoutInflaterFactory: Boolean = true) : T {
+        return setup(activity, themeModel.createInstance(), setDefaultThemeLayoutInflaterFactory)
     }
 
-    fun <T: Any> setup(activity: Activity, themeModel: T) : T {
+    fun <T: Any> setup(activity: Activity, themeModel: T, setDefaultThemeLayoutInflaterFactory: Boolean = true) : T {
+        setupWindowFlags(activity, themeModel)
         setupTheme(activity, themeModel)
         setStatusBarAndNavigationBarColor(activity, themeModel)
-        setLayoutInflater(activity, DefaultThemeLayoutInflaterFactory(activity, themeModel))
+        if (setDefaultThemeLayoutInflaterFactory) {
+            setLayoutInflater(activity, DefaultThemeLayoutInflaterFactory(activity, themeModel))
+        }
         return themeModel
+    }
+
+    private fun setupWindowFlags(activity: Activity, themeModel: Any) {
+        themeModel.javaClass.kotlin.findAnnotation<WindowFlags>().let { window ->
+            if (window != null) {
+                activity.window.addFlags(window.flags)
+                assertWindowFlags(window.flags, themeModel)
+            }
+        }
     }
 
     fun setupTheme(activity: Activity, themeModel: Any) {
@@ -69,22 +87,44 @@ object Themeux {
         activity.setTheme(theme)
     }
 
+    fun setLayoutInflater(activity: Activity, layoutInflaterFactory: LayoutInflater.Factory2) {
+        activity.getLayoutInflater().setFactory2(layoutInflaterFactory);
+    }
+
     fun setStatusBarAndNavigationBarColor(activity: Activity, themeModel: Any) {
-        val statusBarColor = ReflectionUtil.getValue(themeModel, StatusBar::class).let {
-            if (it is String) Color.parseColor(it) else it as Int
-        }
-
-        val navigationBarColor = ReflectionUtil.getValue(themeModel, NavigationBar::class).let {
-            if (it is String) Color.parseColor(it) else it as Int
-        }
-
+        // Status bar color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.window.statusBarColor = statusBarColor
-            activity.window.navigationBarColor = navigationBarColor
+            getThemeModelColor(themeModel, StatusBarColor::class, true)?.let { navigationBarColor ->
+                activity.window.statusBarColor = navigationBarColor
+            }
+        }
+
+        // Navigation bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getThemeModelColor(themeModel, NavigationBarColor::class, true)?.let { navigationBarColor ->
+                activity.window.statusBarColor = navigationBarColor
+            }
         }
     }
 
-    fun setLayoutInflater(activity: Activity, layoutInflaterFactory: LayoutInflater.Factory2) {
-        activity.getLayoutInflater().setFactory2(layoutInflaterFactory);
+    private fun getThemeModelColor(themeModel: Any, annotation: KClass<*>, isOptional: Boolean) : Int? {
+        return ReflectionUtil.getValue(themeModel, annotation, isOptional)?.let { themeColor ->
+            if (themeColor is String) Color.parseColor(themeColor) else themeColor as Int
+        }
+    }
+
+    private fun assertWindowFlags(flags: Int, themeModel: Any) {
+        if (hasBothWindowFlagAndThemeAnnotationSet(flags, FLAG_TRANSLUCENT_NAVIGATION, NavigationBarColor::class, themeModel)) {
+            Log.w(javaClass.name, "Theme attribute @NavigationBarColor will have no effect with window flag FLAG_TRANSLUCENT_NAVIGATION set at same time" )
+        }
+        if (hasBothWindowFlagAndThemeAnnotationSet(flags, FLAG_TRANSLUCENT_STATUS, StatusBarColor::class, themeModel)) {
+            Log.w(javaClass.name, "Theme attribute @NavigationBarColor will have no effect with window flag FLAG_TRANSLUCENT_STATUS set at same time")
+        }
+    }
+
+    private fun hasBothWindowFlagAndThemeAnnotationSet(windowFlags: Int, windowFlag: Int, annotation: KClass<*>, themeModel: Any): Boolean {
+        val hasWindowFlag = ((windowFlags and windowFlag) == windowFlag)
+        val hasThemeModelColor = getThemeModelColor(themeModel, annotation, true)?.let { true } ?: false
+        return hasWindowFlag and hasThemeModelColor
     }
 }

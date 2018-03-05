@@ -14,25 +14,28 @@ object ReflectionUtil {
     private fun getValue(item: KCallable<*>, instance: Any): Any {
         item.isAccessible = true
         if (item is KFunction) {
-            Log.e("", "setupTheme: FUNCTION")
             return (item as KFunction<Any>).call(instance)
         } else if (item is KProperty) {
-            Log.e("", "setupTheme: PROPERTY")
             return (item as KProperty1<Any, Any>).get(instance)
         } else {
             throw Exception("item is not a function or var/val")
         }
     }
 
-    fun getValue(themeModel: Any, annotationClass: KClass<*>): Any {
+    @Throws(Exception::class)
+    fun getValue(themeModel: Any, annotationClass: KClass<*>, isOptional: Boolean = false): Any? {
         val members = themeModel.javaClass.kotlin.declaredMembers.filter {
             it.annotations.any { it.annotationClass == annotationClass }
         }
         if (members.size > 1) {
             throw Exception("Error! Add @${annotationClass.simpleName} annotation to only one field or function")
-        } else if (members.isEmpty()) {
-            throw Exception("${annotationClass.simpleName} annotation not found! Add @${annotationClass.simpleName} annotation to only one field or function")
+        } else if (!isOptional && members.isEmpty()) {
+             throw NoSuchElementException("${annotationClass.simpleName} annotation not found! Add @${annotationClass.simpleName} annotation to only one field or function")
+        } else if (isOptional && members.isEmpty()) {
+            Log.e(javaClass.name, "Optional ${annotationClass.simpleName} annotation not found!")
+            return null
+        } else {
+            return getValue(members.first(), themeModel)
         }
-        return getValue(members.first(), themeModel)
     }
 }

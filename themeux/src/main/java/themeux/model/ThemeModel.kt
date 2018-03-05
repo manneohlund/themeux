@@ -2,21 +2,33 @@ package themeux.model
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import themeux.annotation.*
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+import themeux.annotation.ToolbarBarBackground
+import themeux.annotation.color.AccentColor
+import themeux.annotation.color.NavigationBarColor
+import themeux.annotation.color.StatusBarColor
+import themeux.annotation.flag.WindowFlags
+import themeux.annotation.theme.Theme
+import themeux.annotation.theme.ToolbarThemeOverlay
 
 /**
  * Created by Manne Öhlund on 2018-02-23.
  * Copyright © 2018. All rights reserved.
  */
 
+@WindowFlags(
+        FLAG_LAYOUT_IN_SCREEN
+        or FLAG_TRANSLUCENT_NAVIGATION
+)
 class ThemeModel {
     val LIGHT = 0
     val DARK = 1
 
     var theme = LIGHT
-    @StatusBar
+    @StatusBarColor
     var statusBarColor = "#FFFF5722"
-    @NavigationBar
+    @NavigationBarColor
     var navigationBarColor = "#FFFF5722"
 
     // Theme overlays
@@ -26,7 +38,7 @@ class ThemeModel {
 
     // Other
 
-    @ToolbarBar
+    @ToolbarBarBackground
     private var toolbarColor: String = "#FFFF5722"
     @AccentColor
     private var accentColor: String = "#FFFF5722"
@@ -65,6 +77,10 @@ class ThemeModel {
 
     fun getToolbarColor(): Int {
         return Color.parseColor(toolbarColor)
+    }
+
+    fun getToolbarColorDrawable(): ColorDrawable {
+        return ColorDrawable(getToolbarColor())
     }
 
     fun getAccentColor(): Int {
