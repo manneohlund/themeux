@@ -27,9 +27,40 @@ dependencies {
 # Basic Usage
 ### Theme class
 
-Create a class with any name and assign variables with key annotations to map preferred ui component to style. All annotations below are mandatory!
+Create a class with any name and assign variables with key annotations to map preferred ui component to style.<br/>
+You can pretty much build a ThemeModel with any attribute naming and set proper target annotation.<br/>
+Colors can either be `hex` or as `integer`.<br/>
+You can specify your own theme in styles and reference it via the package `R.style`.
+Some annotations below are mandatory!<br/>
 
-```java
+```kotlin
+class ThemeModel {
+    @Theme
+    val theme = android.support.v7.appcompat.R.style.Theme_AppCompat_NoActionBar
+
+    @ToolbarThemeOverlay
+    val toolbarThemeOverlay = android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark
+
+    @ToolbarPopupThemeOverlay
+    val popupThemeOverlay = android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark
+
+    @AccentColor
+    val accentColor = Color.parseColor("#8BC34A")
+
+    @TaskDescriptionColor
+    @StatusBarColor
+    @PrimaryColor
+    val primaryColor = Color.parseColor("#4CAF50")
+
+    @NavigationBarColor
+    @PrimaryDarkColor
+    val primaryDarkColor = Color.parseColor("#C8388E3C")
+}
+```
+
+#### Or for example
+
+```kotlin
 class ThemeModel {
     @Theme
     var theme = android.support.v7.appcompat.R.style.Theme_AppCompat_NoActionBar
@@ -43,6 +74,7 @@ class ThemeModel {
     var accentColor: String = "#FFFF5722"
     
     // Other colors
+    @PrimaryColor
     var primaryColor: String = "#FFFF5722"
 }
 ```
@@ -107,7 +139,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 # Advanced Usage
 #### Json theme
 
-Define themes in `.json` files and add it to `assets` folder, load them with your ThemeModel to override variables with the `json` theme.
+Define themes in `.json` files and add it to `assets` folder, load them with your ThemeModel to override variables with the `json` theme variables.
 
 ```json
 // blue_theme.json
@@ -126,7 +158,7 @@ Define themes in `.json` files and add it to `assets` folder, load them with you
 #### ThemeModel
 Note that annotations can be put on functions also! See `@Theme` `@ToolbarThemeOverlay`
 
-```java
+```kotlin
 class ThemeModel {  
   val LIGHT = 0  
   val DARK = 1  
@@ -168,12 +200,12 @@ class ThemeModel {
 ```
 
 #### Activity
-```java
+```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
 	// Load json theme and override target model
     val theme: ThemeModel = let {  
-	    try {
-		    Themeux.setup(this, "blue_theme.json")  
+        try {
+            Themeux.setup(this, "blue_theme.json")  
         } catch (e: Exception) {  
             Log.e(MainActivity::class.simpleName, "Error: AssetFileNotFound, " \+ e.message)  
   
@@ -183,9 +215,9 @@ override fun onCreate(savedInstanceState: Bundle?) {
     } 
     
     // Call super after the JsonThemer setup
-    super.onCreate(savedInstanceState)  
-
-	// Setup data binding and set the theme and make custom changes to the layout
+    super.onCreate(savedInstanceState) 
+    
+    // Setup data binding and set the theme and make custom changes to the layout
     binding = DataBindingUtil.setContentView(this, R.layout.activity_main)  
     binding.themeModel = theme  
   
