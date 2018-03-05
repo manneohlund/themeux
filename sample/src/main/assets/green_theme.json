@@ -1,6 +1,6 @@
 {
   "theme": 1,
-  "toolbarThemeOverlay": 0,
+  "toolbarThemeOverlay": 1,
   "popupThemeOverlay": 1,
   "statusBarColor": "#388E3C",
   "toolbarColor": "#4CAF50",
