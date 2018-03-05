@@ -1,6 +1,9 @@
 package themeux
 
 import android.app.Activity
+import android.app.ActivityManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
@@ -9,6 +12,7 @@ import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
 import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 import themeux.annotation.color.NavigationBarColor
 import themeux.annotation.color.StatusBarColor
+import themeux.annotation.color.TaskDescriptionColor
 import themeux.annotation.flag.WindowFlags
 import themeux.annotation.theme.Theme
 import themeux.factory.DefaultThemeLayoutInflaterFactory
@@ -66,6 +70,7 @@ object Themeux {
     fun <T: Any> setup(activity: Activity, themeModel: T, setDefaultThemeLayoutInflaterFactory: Boolean = true) : T {
         setupWindowFlags(activity, themeModel)
         setupTheme(activity, themeModel)
+        setupTaskDescription(activity, themeModel)
         setStatusBarAndNavigationBarColor(activity, themeModel)
         if (setDefaultThemeLayoutInflaterFactory) {
             setLayoutInflater(activity, DefaultThemeLayoutInflaterFactory(activity, themeModel))
@@ -73,7 +78,7 @@ object Themeux {
         return themeModel
     }
 
-    private fun setupWindowFlags(activity: Activity, themeModel: Any) {
+    fun setupWindowFlags(activity: Activity, themeModel: Any) {
         themeModel.javaClass.kotlin.findAnnotation<WindowFlags>().let { window ->
             if (window != null) {
                 activity.window.addFlags(window.flags)
@@ -87,8 +92,21 @@ object Themeux {
         activity.setTheme(theme)
     }
 
-    fun setLayoutInflater(activity: Activity, layoutInflaterFactory: LayoutInflater.Factory2) {
-        activity.getLayoutInflater().setFactory2(layoutInflaterFactory);
+    fun setTaskDescription(activity: Activity, themeModel: Any, taskLabel: String? = null, taskIcon: Int? = null) {
+        setupTaskDescription(activity, themeModel, taskLabel, taskIcon?.let { BitmapFactory.decodeResource(activity.resources, it) })
+    }
+
+    fun setTaskDescription(activity: Activity, themeModel: Any, taskLabel: String? = null, taskIcon: Bitmap? = null) {
+        setupTaskDescription(activity, themeModel, taskLabel, taskIcon)
+    }
+
+    private fun setupTaskDescription(activity: Activity, themeModel: Any, taskLabel: String? = null, taskIcon: Bitmap? = null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getThemeModelColor(themeModel, TaskDescriptionColor::class, true)?.let { color ->
+                val taskDescription = ActivityManager.TaskDescription(taskLabel, taskIcon, color)
+                activity.setTaskDescription(taskDescription)
+            }
+        }
     }
 
     fun setStatusBarAndNavigationBarColor(activity: Activity, themeModel: Any) {
@@ -107,7 +125,11 @@ object Themeux {
         }
     }
 
-    private fun getThemeModelColor(themeModel: Any, annotation: KClass<*>, isOptional: Boolean) : Int? {
+    fun setLayoutInflater(activity: Activity, layoutInflaterFactory: LayoutInflater.Factory2) {
+        activity.getLayoutInflater().setFactory2(layoutInflaterFactory);
+    }
+
+    fun getThemeModelColor(themeModel: Any, annotation: KClass<*>, isOptional: Boolean) : Int? {
         return ReflectionUtil.getValue(themeModel, annotation, isOptional)?.let { themeColor ->
             if (themeColor is String) Color.parseColor(themeColor) else themeColor as Int
         }
