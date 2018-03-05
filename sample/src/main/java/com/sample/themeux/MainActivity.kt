@@ -24,9 +24,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Setup theme
         val theme: ThemeModel = Themeux.setup(this, currentTheme)
+        // Set custom task description
         Themeux.setTaskDescription(this, theme, "Custom title", R.drawable.abc_ic_star_black_48dp)
+
+        // Call super
         super.onCreate(savedInstanceState)
+
+        // Setup data binding
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.themeModel = theme
 
