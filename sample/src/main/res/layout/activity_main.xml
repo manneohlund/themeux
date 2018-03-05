@@ -19,16 +19,14 @@
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
-            android:background="@{themeModel.toolbarColor}"
+            android:background="@{themeModel.toolbarColorDrawable}"
             android:fitsSystemWindows="true">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@{themeModel.toolbarColor}"
                 android:fitsSystemWindows="true"
-                app:contentScrim="@{themeModel.statusBarColorDrawable}"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <android.support.v7.widget.Toolbar
@@ -46,8 +44,8 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
             android:fillViewport="true"
+            android:fitsSystemWindows="true"
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
