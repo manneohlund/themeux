@@ -20,7 +20,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    compile 'com.github.manneohlund:themeux:3.0.0'
+    compile 'com.github.manneohlund:themeux:3.1.0'
 }
 ```
 
