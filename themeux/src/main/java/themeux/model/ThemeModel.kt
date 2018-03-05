@@ -8,8 +8,10 @@ import themeux.annotation.ToolbarBarBackground
 import themeux.annotation.color.AccentColor
 import themeux.annotation.color.NavigationBarColor
 import themeux.annotation.color.StatusBarColor
+import themeux.annotation.color.TaskDescriptionColor
 import themeux.annotation.flag.WindowFlags
 import themeux.annotation.theme.Theme
+import themeux.annotation.theme.ToolbarPopupThemeOverlay
 import themeux.annotation.theme.ToolbarThemeOverlay
 
 /**
@@ -26,18 +28,17 @@ class ThemeModel {
     val DARK = 1
 
     var theme = LIGHT
+    @TaskDescriptionColor
     @StatusBarColor
     var statusBarColor = "#FFFF5722"
     @NavigationBarColor
     var navigationBarColor = "#FFFF5722"
 
     // Theme overlays
-
     private var toolbarThemeOverlay: Int = LIGHT
     private var popupThemeOverlay: Int = LIGHT
 
     // Other
-
     @ToolbarBarBackground
     private var toolbarColor: String = "#FFFF5722"
     @AccentColor
@@ -56,11 +57,12 @@ class ThemeModel {
     fun getToolbarThemeOverlay(): Int {
         return when (toolbarThemeOverlay) {
             DARK -> return android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark_ActionBar
-            else -> android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_ActionBar
+            else -> android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Light
         }
     }
 
-    fun getPopupThemeOverlay(): Int {
+    @ToolbarPopupThemeOverlay
+    fun getToolbarPopupThemeOverlay(): Int {
         return when (popupThemeOverlay) {
             DARK -> return android.support.v7.appcompat.R.style.Theme_AppCompat
             else -> android.support.v7.appcompat.R.style.Theme_AppCompat_Light

@@ -18,13 +18,14 @@ class MainActivity : AppCompatActivity() {
         val RED_THEME = "red_theme.json"
         val WHITE_THEME = "white_theme.json"
 
-        var currentTheme: String = LIME_THEME
+        var currentTheme: String = WHITE_THEME
     }
 
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val theme: ThemeModel = Themeux.setup(this, currentTheme)
+        Themeux.setTaskDescription(this, theme, "Custom title", R.drawable.abc_ic_star_black_48dp)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.themeModel = theme
@@ -41,16 +42,12 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
-        if (id == R.id.action_red) {
-            changeTheme(RED_THEME)
-        } else if (id == R.id.action_lime) {
-            changeTheme(LIME_THEME)
-        } else if (id == R.id.action_green) {
-            changeTheme(GREEN_THEME)
-        } else if (id == R.id.action_blue) {
-            changeTheme(BLUE_THEME)
-        } else if (id == R.id.action_white) {
-            changeTheme(WHITE_THEME)
+        when (id) {
+            R.id.action_red -> changeTheme(RED_THEME)
+            R.id.action_lime -> changeTheme(LIME_THEME)
+            R.id.action_green -> changeTheme(GREEN_THEME)
+            R.id.action_blue -> changeTheme(BLUE_THEME)
+            R.id.action_white -> changeTheme(WHITE_THEME)
         }
         return super.onOptionsItemSelected(item)
     }
