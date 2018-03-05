@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.sample.themeux.databinding.ActivityMainBinding
+import com.sample.themeux.model.BasicThemeModel
 import themeux.Themeux
-import themeux.model.ThemeModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Setup theme
-        val theme: ThemeModel = Themeux.setup(this, currentTheme)
+        val theme: BasicThemeModel = Themeux.setup(this, BasicThemeModel())
         // Set custom task description
         Themeux.setTaskDescription(this, theme, "Custom title", R.drawable.abc_ic_star_black_48dp)
 

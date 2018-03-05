@@ -5,7 +5,7 @@
 
         <variable
             name="themeModel"
-            type="themeux.model.ThemeModel" />
+            type="com.sample.themeux.model.BasicThemeModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,7 +19,7 @@
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
-            android:background="@{themeModel.toolbarColorDrawable}"
+            android:background="@{themeModel.primaryColorDrawable}"
             android:fitsSystemWindows="true">
 
             <android.support.design.widget.CollapsingToolbarLayout

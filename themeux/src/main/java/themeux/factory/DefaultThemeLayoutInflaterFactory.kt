@@ -75,7 +75,7 @@ class DefaultThemeLayoutInflaterFactory(
                 toolbar.popupTheme = toolbarPopupThemeOverlay
                 return toolbar
             } else if (TextUtils.equals(viewName, AppBarLayout::class.java.name)) {
-                return AppBarLayout(toolbarThemeOverlayWrapper, attributeSet)
+                //return AppBarLayout(toolbarThemeOverlayWrapper, attributeSet)
             } else if (viewName.startsWith("android.support.v7.widget.AppCompat")) {
                 if (TextUtils.equals(viewName, AppCompatRadioButton::class.java.name)) {
                     val radioButton = AppCompatRadioButton(themeWrapper, attributeSet)

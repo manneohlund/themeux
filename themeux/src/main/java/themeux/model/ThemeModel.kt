@@ -28,7 +28,6 @@ class ThemeModel {
     val DARK = 1
 
     var theme = LIGHT
-    @TaskDescriptionColor
     @StatusBarColor
     var statusBarColor = "#FFFF5722"
     @NavigationBarColor
@@ -39,6 +38,7 @@ class ThemeModel {
     private var popupThemeOverlay: Int = LIGHT
 
     // Other
+    @TaskDescriptionColor
     @ToolbarBarBackground
     private var toolbarColor: String = "#FFFF5722"
     @AccentColor
@@ -56,7 +56,7 @@ class ThemeModel {
     @ToolbarThemeOverlay
     fun getToolbarThemeOverlay(): Int {
         return when (toolbarThemeOverlay) {
-            DARK -> return android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark_ActionBar
+            DARK -> return android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark
             else -> android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Light
         }
     }
@@ -64,8 +64,8 @@ class ThemeModel {
     @ToolbarPopupThemeOverlay
     fun getToolbarPopupThemeOverlay(): Int {
         return when (popupThemeOverlay) {
-            DARK -> return android.support.v7.appcompat.R.style.Theme_AppCompat
-            else -> android.support.v7.appcompat.R.style.Theme_AppCompat_Light
+            DARK -> return android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark
+            else -> android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Light
         }
     }
 
