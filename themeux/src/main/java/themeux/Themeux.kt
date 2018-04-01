@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
@@ -13,6 +14,7 @@ import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 import themeux.annotation.color.NavigationBarColor
 import themeux.annotation.color.StatusBarColor
 import themeux.annotation.color.TaskDescriptionColor
+import themeux.annotation.flag.SystemUiFlags
 import themeux.annotation.flag.WindowFlags
 import themeux.annotation.theme.Theme
 import themeux.factory.DefaultThemeLayoutInflaterFactory
@@ -69,6 +71,7 @@ object Themeux {
 
     fun <T: Any> setup(activity: Activity, themeModel: T, setDefaultThemeLayoutInflaterFactory: Boolean = true) : T {
         setupWindowFlags(activity, themeModel)
+        setSystemUiFlags(activity, themeModel)
         setupTheme(activity, themeModel)
         setupTaskDescription(activity, themeModel)
         setStatusBarAndNavigationBarColor(activity, themeModel)
@@ -83,6 +86,16 @@ object Themeux {
             if (window != null) {
                 activity.window.addFlags(window.flags)
                 assertWindowFlags(window.flags, themeModel)
+            }
+        }
+    }
+
+    fun setSystemUiFlags(activity: Activity, themeModel: Any) {
+        themeModel.javaClass.kotlin.findAnnotation<SystemUiFlags>().let { systemUiFlags ->
+            systemUiFlags?.let {
+                Handler().postDelayed({
+                    activity?.window.decorView.systemUiVisibility = systemUiFlags?.flags
+                }, 100)
             }
         }
     }

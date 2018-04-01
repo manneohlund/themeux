@@ -2,6 +2,7 @@ package themeux.model
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
 import themeux.annotation.ToolbarBarBackground
@@ -9,6 +10,7 @@ import themeux.annotation.color.AccentColor
 import themeux.annotation.color.NavigationBarColor
 import themeux.annotation.color.StatusBarColor
 import themeux.annotation.color.TaskDescriptionColor
+import themeux.annotation.flag.SystemUiFlags
 import themeux.annotation.flag.WindowFlags
 import themeux.annotation.theme.Theme
 import themeux.annotation.theme.ToolbarPopupThemeOverlay
@@ -23,6 +25,7 @@ import themeux.annotation.theme.ToolbarThemeOverlay
         FLAG_LAYOUT_IN_SCREEN
         or FLAG_TRANSLUCENT_NAVIGATION
 )
+@SystemUiFlags(SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
 class ThemeModel {
     val LIGHT = 0
     val DARK = 1
