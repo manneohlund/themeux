@@ -1,6 +1,5 @@
 package com.sample.themeux.model
 
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import themeux.annotation.color.*
 import themeux.annotation.theme.Theme
@@ -23,16 +22,16 @@ class BasicThemeModel {
     val popupThemeOverlay = android.support.v7.appcompat.R.style.ThemeOverlay_AppCompat_Dark
 
     @AccentColor
-    private val accentColor = Color.parseColor("#8BC34A")
+    var accentColor = 0xFF88C34A.toInt()
 
     @TaskDescriptionColor
     @StatusBarColor
     @PrimaryColor
-    private val primaryColor = Color.parseColor("#4CAF50")
+    private val primaryColor = 0xFF4CAF50.toInt()
 
     @NavigationBarColor
     @PrimaryDarkColor
-    private val primaryDarkColor = Color.parseColor("#C8388E3C")
+    private val primaryDarkColor = 0xC8388E3C.toInt()
 
     fun getPrimaryColorDrawable(): ColorDrawable {
         return ColorDrawable(primaryColor)
